@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Maha ❤️</title>
+    <style>
+        /* --- FONTS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@600&display=swap');
+
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* White Flash Overlay */
+        #screen-flash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 20;
+            transition: opacity 0.1s ease-out;
+        }
+
+        /* Start Screen */
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #020202;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s;
+        }
+
+        button {
+            padding: 15px 50px;
+            font-size: 22px;
+            background: linear-gradient(45deg, #ff0055, #ff4d6d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.6);
+            animation: pulse 1.5s infinite;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.05);} 100% {transform: scale(1);} }
+
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; }
+
+        /* Message Container */
+        #message-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- THE TEXT (OPTIMIZED FOR SMOOTHNESS) --- */
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem;
+            line-height: 1.1;
+            margin: 0;
+            padding-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 40px #ff0055;
+            
+            /* Performance Optimization */
+            opacity: 0;
+            transform: scale(0.5);
+            will-change: transform, opacity; 
+        }
+
+        /* The SMOOTH Boom Animation */
+        .boom-text {
+            animation: textReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes textReveal {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- SLIDESHOW STYLES --- */
+        #gallery {
+            position: relative;
+            width: 250px;  
+            height: 320px;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 2s, transform 2s;
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
+            border-radius: 15px;
+            border: 5px solid white;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* Super smooth fade */
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            #gallery { width: 200px; height: 260px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screen-flash"></div>
+
+    <div id="start-screen">
+        <h2 style="color: #ff4d6d; font-size: 1.5rem; margin-bottom: 10px;">Are you ready maha❤️?</h2>
+        <p style="color: #999; font-size: 0.9rem; margin-bottom: 30px;">(Turn volume up 🔊)</p>
+        <button id="start-btn">Click for Surprise</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="message-container">
+        <h1 id="main-text">Happy Valentine's<br>Day Maha! ❤️</h1>
+        
+        <div id="gallery">
+            <img class="slide active" src="https://www.dropbox.com/scl/fi/3syb7aszircy1bme6nzwf/IMG_20260214_111804.jpg?rlkey=xzbl5htcqe88mg4wy2296k0jl&st=ofxm7bff&raw=1" alt="Maha 1">
+            <img class="slide" src="https://www.dropbox.com/scl/fi/uh9h5phc06kfffvvldi9m/IMG_20260214_111923.jpg?rlkey=fsyxcuzavw3f87c78jly9xk99&st=rtjb53xa&raw=1" alt="Maha 2">
+            <img class="slide" src="https://www.dropbox.com/scl/fi/f1zwp0asj3tfgeaj72jgy/IMG_20260214_111951.jpg?rlkey=j4lodp20jiea25z1ojmc539br&st=iizo5of5&raw=1" alt="Maha 3">
+            <img class="slide" src="https://www.dropbox.com/scl/fi/j32tj80ofip9g21v7i85l/IMG_20260214_112252.jpg?rlkey=rrh2qtil1awuhg61fund2hgxa&st=fbdcllp5&raw=1" alt="Maha 4">
+            <img class="slide" src="https://www.dropbox.com/scl/fi/84bskswz0ko2dzr4pdl1y/IMG_20260214_112303.jpg?rlkey=gsyigkkxtwccef6rpxmdpgw3o&st=zsa2wnkx&raw=1" alt="Maha 5">
+            <img class="slide" src="https://www.dropbox.com/scl/fi/55t8e4g5huygm5epd3q1r/IMG_20260214_112326.jpg?rlkey=jg5x6y2kltkltfl1djr5lme3v&st=9oanc4uc&raw=1" alt="Maha 6">
+        </div>
+    </div>
+
+    <audio id="bg-music" preload="auto">
+        <source src="https://www.dropbox.com/scl/fi/yd9h6i9ow2oi0m0omskbl/9fIuQ38t4w2TfemNbmSU-kcTV3G-Wi34.m4a?rlkey=0r4rgwuo54098kr3yy3m7uhur&st=7pw3r2u1&raw=1" type="audio/mp4">
+    </audio>
+
+    <script>
+        /* --- FIREWORKS ENGINE (OPTIMIZED) --- */
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particles = [];
+        
+        /* --- AUDIO --- */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playRealCrackle(size) {
+            if (audioCtx.state === 'suspended') return;
+            const bufferSize = audioCtx.sampleRate * (size === 'mega' ? 2.0 : 0.5); 
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = size === 'mega' ? 400 : 1000; 
+
+            const gainNode = audioCtx.createGain();
+            let volume = size === 'mega' ? 3.0 : 0.5; 
+            
+            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + (size === 'mega' ? 1.5 : 0.5));
+
+            noise.connect(filter); filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            noise.start();
+        }
+
+        function createFirework(x, y, type = 'normal') {
+            // REDUCED PARTICLE COUNT FOR PERFORMANCE
+            let count = type === 'mega' ? 300 : 40; 
+            let speedMult = type === 'mega' ? 15 : 6;
+            let colors = type === 'mega' 
+                ? ['#ff0055', '#ffbd00', '#ffffff', '#ff4d6d'] 
+                : ['#ff0055', '#ccff00', '#00ccff'];
+
+            playRealCrackle(type);
+
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * speedMult;
+                particles.push({
+                    x: x, y: y,
+                    vx: Math.cos(angle) * velocity,
+                    vy: Math.sin(angle) * velocity,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.005
+                });
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy + 0.05; 
+                p.vx *= 0.95; 
+                p.vy *= 0.95;
+                p.alpha -= p.decay;
+
+                if (p.alpha <= 0) particles.splice(index, 1);
+                else {
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(animate);
+        }
+
+        /* --- THE TIMELINE --- */
+        const startBtn = document.getElementById('start-btn');
+        const startScreen = document.getElementById('start-screen');
+        const music = document.getElementById('bg-music');
+        const flash = document.getElementById('screen-flash');
+        const msgContainer = document.getElementById('message-container');
+        const mainText = document.getElementById('main-text');
+        const gallery = document.getElementById('gallery');
+        const slides = document.querySelectorAll('.slide');
+
+        startBtn.addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            music.volume = 0; 
+            music.play();
+
+            startScreen.style.opacity = 0;
+            setTimeout(() => startScreen.style.display = 'none', 1000);
+            animate();
+            
+            // Random small fireworks
+            let interval = setInterval(() => {
+                createFirework(Math.random() * canvas.width, canvas.height * 0.5, 'normal');
+            }, 600);
+
+            // --- THE BIG MOMENT (3.5 Seconds in) ---
+            setTimeout(() => {
+                clearInterval(interval); // STOP random fireworks to save CPU for text
+                
+                flash.style.opacity = 1;
+                setTimeout(() => flash.style.opacity = 0, 50);
+
+                createFirework(canvas.width / 2, canvas.height / 2, 'mega');
+                
+                msgContainer.style.opacity = 1;
+                mainText.classList.add('boom-text'); // Starts smooth CSS animation
+
+                music.currentTime = 0; 
+                music.volume = 1.0;    
+
+            }, 3500);
+
+            // Aftermath
+            setTimeout(() => {
+                gallery.style.opacity = 1;
+                gallery.style.transform = "translateY(0)";
+                
+                // Slideshow Logic
+                let currentSlide = 0;
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }, 3000);
+
+                // Resume background fireworks AFTER text is done animating
+                setInterval(() => {
+                   if(Math.random()>0.5) createFirework(Math.random() * canvas.width, Math.random() * canvas.height * 0.5);
+                }, 800);
+                
+            }, 5500); // Delayed slightly to let text finish appearing
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
